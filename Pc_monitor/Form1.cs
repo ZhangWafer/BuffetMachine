@@ -346,7 +346,7 @@ namespace Pc_monitor
                     GetFunction(get_url);
                 }
                 MessageBox.Show("同步完成！");
-                
+                ClearTable();
             }
             catch (Exception essException)
             {
@@ -358,7 +358,12 @@ namespace Pc_monitor
 
         private void ClearTable()
         {
-
+            SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "delect from dbo.TempRecord where 1=1";
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         //获取record表
