@@ -1,0 +1,15 @@
+警员135餐同步接口
+http://localhost:7029/Interface/Synchronize/PCCommonSynchronize.ashx?pcId=1&cafeteriId=16&cookbookSetInDateId=26
+
+
+职员135餐同步接口
+http://localhost:7029/Interface/Synchronize/WorkerCommonSynchronize.ashx?workerId=1&cafeteriId=16&cookbookSetInDateId=26
+
+
+警员打包餐同步接口
+http://localhost:7029/Interface/Synchronize/PCPackingSynchronize.ashx?pcId=1&cafeteriId=16&cookbookSetInDateId=26&cookbookSetInDateDetailIds=374,375,376
+
+
+职员打包餐同步接口
+http://localhost:7029/Interface/Synchronize/WorkerPackingSynchronize.ashx?workerId=1&cafeteriId=16&cookbookSetInDateId=26&cookbookSetInDateDetailIds=374,375,376
+
