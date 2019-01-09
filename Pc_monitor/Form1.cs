@@ -361,7 +361,7 @@ namespace Pc_monitor
             SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "delect from dbo.TempRecord where 1=1";
+            cmd.CommandText = "DELETE from dbo.TempRecord where 1=1";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
