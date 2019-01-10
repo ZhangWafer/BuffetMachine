@@ -74,9 +74,9 @@
             this.button1.BackgroundImage = global::Pc_monitor.Properties.Resources.login_bg2;
             this.button1.Font = new System.Drawing.Font("宋体", 20F);
             this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button1.Location = new System.Drawing.Point(330, 637);
+            this.button1.Location = new System.Drawing.Point(330, 608);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(631, 81);
+            this.button1.Size = new System.Drawing.Size(631, 110);
             this.button1.TabIndex = 3;
             this.button1.Text = "提交点餐";
             this.button1.UseVisualStyleBackColor = true;
@@ -123,9 +123,8 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label4.Location = new System.Drawing.Point(453, 140);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(403, 67);
+            this.label4.Size = new System.Drawing.Size(0, 67);
             this.label4.TabIndex = 7;
-            this.label4.Text = "午餐-3.00元";
             // 
             // button3
             // 

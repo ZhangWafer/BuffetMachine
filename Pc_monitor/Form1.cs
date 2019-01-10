@@ -36,6 +36,7 @@ namespace Pc_monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
             timer1.Start();
@@ -47,6 +48,7 @@ namespace Pc_monitor
             {
                 PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
                 WorkerTable = SqlHelper.ExecuteDataTable("select * from Cater.WorkerStaff");
+
                 All_OrderDetail = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDateDetail");
                 All_OrderTable = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDate");
             }
@@ -73,20 +75,20 @@ namespace Pc_monitor
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText =
-                "INSERT INTO [dbo].[TempRecord]([staffEnum],[staffId],[staffCanteen],[OrderId],[time])VALUES('" +
-                personEnum + "','" + personId + "','" + staffCanteen + "','" + OrderId + "','" + recordTime + "')";
+                "INSERT INTO [dbo].[TempRecord]([staffEnum],[staffId],[staffCanteen],[OrderId],[time],[upDateBool])VALUES('" +
+                personEnum + "','" + personId + "','" + staffCanteen + "','" + OrderId + "','" + recordTime + "','false')";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
 
         //查询是否重复刷卡
-        private bool OverPay(string personId, string OrderId)
+        private bool OverPay(string personId, string OrderId, string staffEnum)
         {
             SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "select COUNT(1) from dbo.TempRecord where staffId='" + personId + "' and OrderId='" +
-                              OrderId + "'";
+                              OrderId + "' and staffEnum='" + staffEnum + "'";
             object count = cmd.ExecuteScalar();
             conn.Close();
             if (count.ToString() == "1")
@@ -129,7 +131,8 @@ namespace Pc_monitor
                     staffEnum = jsonObj["staffEnum"].ToString();
                     //检查是否存在这个人
                     DataRow[] selectedResult = PcTable.Select("Id=" + personId);
-                    if (selectedResult.Length == 0)
+                    DataRow[] selectedResult_worker = WorkerTable.Select("Id=" + personId);
+                    if (selectedResult.Length == 0 || selectedResult_worker.Length == 0)
                     {
                         richTextBox1.Text = "";
                         label2.Font = new Font("宋体粗体", 50);
@@ -138,12 +141,11 @@ namespace Pc_monitor
                         return;
                     }
                     //检查是否重复刷卡
-                    if (OverPay(personId, TempOrderId.ToString()))
+                    if (OverPay(personId, TempOrderId.ToString(), staffEnum))
                     {
                         richTextBox1.Text = "";
                         label2.Text = "重复扫码！";
                         return;
-
                     }
 
                     //显示扫码成功！大字体
@@ -180,7 +182,7 @@ namespace Pc_monitor
             //20秒跑一次程序
             if (timer_count_10s >= 10)
             {
-                if (label2.Text == "扫码成功！")
+                if (label2.Text == "扫码成功！" || label2.Text == "重复扫码！")
                 {
                     label2.Text = Record_RecentOrder;
                 }
@@ -294,9 +296,19 @@ namespace Pc_monitor
                 MessageBox.Show("数据库连接错误");
                 return;
             }
-            TempOrderId = Int32.Parse(dt2.Rows[0][0].ToString());
+            try
+            {
+                TempOrderId = Int32.Parse(dt2.Rows[0][0].ToString());
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("查无排餐");
+                return;
+            }
             label4.Text = showString + "-" + dt2.Rows[0][7] + "元";
             Record_RecentOrder = label4.Text;
+            button1.Enabled = true;
         }
 
         List<string> OrderFoodList = new List<string>();
@@ -326,6 +338,7 @@ namespace Pc_monitor
         //将本地的记录通过调用接口提交服务器
         private void button3_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             try
             {
                 DataTable recorDataTable = GetTempRecord("Police");
@@ -333,7 +346,6 @@ namespace Pc_monitor
                 //提交字符串url
                 for (int i = 0; i < recorDataTable.Rows.Count; i++)
                 {
-
                     string get_url = "http://120.236.239.118:7030/Interface/Synchronize/PCCommonSynchronize.ashx?pcId=" + recorDataTable.Rows[i][2] + "&cafeteriId=" + recorDataTable.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable.Rows[i][4];
                     GetFunction(get_url);
                 }
@@ -341,27 +353,27 @@ namespace Pc_monitor
                 //提交字符串url
                 for (int i = 0; i < recorDataTable2.Rows.Count; i++)
                 {
-
-                    string get_url = "http://120.236.239.118:7030/Interface/Synchronize/WorkerCommonSynchronize.ashx?workerId=" + recorDataTable2.Rows[i][2] + "&cafeteriId=" + recorDataTable.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable2.Rows[i][4];
+                    string get_url = "http://120.236.239.118:7030/Interface/Synchronize/WorkerCommonSynchronize.ashx?workerId=" + recorDataTable2.Rows[i][2] + "&cafeteriId=" + recorDataTable2.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable2.Rows[i][4];
                     GetFunction(get_url);
                 }
+                this.Enabled = true;
                 MessageBox.Show("同步完成！");
-                ClearTable();
+                ChangeUpdateTable();
             }
             catch (Exception essException)
             {
-
+                this.Enabled = true;
                 MessageBox.Show(essException.Message);
             }
 
         }
 
-        private void ClearTable()
+        private void ChangeUpdateTable()
         {
             SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "DELETE from dbo.TempRecord where 1=1";
+            cmd.CommandText = "UPDATE [LocalRecord].[dbo].[TempRecord] SET [upDateBool] = 'true' WHERE [upDateBool]='false'";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -371,7 +383,7 @@ namespace Pc_monitor
         {
             SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
             conn.Open();
-            SqlCommand sqlCommand = new SqlCommand("select * from dbo.TempRecord where staffEnum='" + Pc_Worker + "'", conn);
+            SqlCommand sqlCommand = new SqlCommand("select * from dbo.TempRecord where staffEnum='" + Pc_Worker + "' and upDateBool='0'", conn);
             SqlDataAdapter sqlDataAdapter=new SqlDataAdapter(sqlCommand);
             DataTable tempDatetable=new DataTable();
             sqlDataAdapter.Fill(tempDatetable);
