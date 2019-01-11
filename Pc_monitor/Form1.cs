@@ -238,6 +238,11 @@ namespace Pc_monitor
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //更新数据表
+            PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
+            WorkerTable = SqlHelper.ExecuteDataTable("select * from Cater.WorkerStaff");
+            All_OrderDetail = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDateDetail");
+            All_OrderTable = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDate");
             //分割线·············分割线//
             int catlocation = Properties.Settings.Default.catlocation;
             DateTime currentTime = new DateTime();
