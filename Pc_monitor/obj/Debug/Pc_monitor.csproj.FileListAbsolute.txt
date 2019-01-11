@@ -71,10 +71,10 @@ E:\GitHub\BuffetMachine\Pc_monitor\bin\Debug\SqlServerTypes\x86\SqlServerSpatial
 E:\GitHub\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.exe
 E:\GitHub\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.pdb
 E:\GitHub\BuffetMachine\Pc_monitor\bin\Debug\Microsoft.SqlServer.Types.dll
-E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojResolveAssemblyReference.cache
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.backForm.resources
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form1.resources
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form5.resources
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.login.resources
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Properties.Resources.resources
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.GenerateResource.Cache
+E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojResolveAssemblyReference.cache

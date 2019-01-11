@@ -132,7 +132,7 @@ namespace Pc_monitor
                     //检查是否存在这个人
                     DataRow[] selectedResult = PcTable.Select("Id=" + personId);
                     DataRow[] selectedResult_worker = WorkerTable.Select("Id=" + personId);
-                    if (selectedResult.Length == 0 || selectedResult_worker.Length == 0)
+                    if (selectedResult.Length == 0 && selectedResult_worker.Length == 0)
                     {
                         richTextBox1.Text = "";
                         label2.Font = new Font("宋体粗体", 50);
@@ -145,6 +145,7 @@ namespace Pc_monitor
                     {
                         richTextBox1.Text = "";
                         label2.Text = "重复扫码！";
+                        SpeechVideo_Read(0, 100, "重复扫码！");
                         return;
                     }
 
@@ -173,8 +174,6 @@ namespace Pc_monitor
                     label2.Text = "请出示正确的二维码";
                     SpeechVideo_Read(0, 100, "扫码错误！");
                 }
-
-
                 //写入文本，写入记录
 
             }
@@ -252,11 +251,8 @@ namespace Pc_monitor
             string st4 = Properties.Settings.Default.l2; //午餐后
 
             DateTime b1DateTime = Convert.ToDateTime(st1);
-
             DateTime b2DateTime = Convert.ToDateTime(st2);
-
             DateTime l1DateTime = Convert.ToDateTime(st3);
-
             DateTime l2DateTime = Convert.ToDateTime(st4);
 
 
