@@ -156,6 +156,8 @@
     </Content>
     <Content Include="login-bg.png" />
     <Content Include="login-bg2.png" />
+    <None Include="Resources\480p.png" />
+    <None Include="Resources\button_bb.png" />
     <Content Include="SqlServerTypes\readme.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

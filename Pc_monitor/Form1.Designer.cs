@@ -71,7 +71,8 @@
             // 
             // button1
             // 
-            this.button1.BackgroundImage = global::Pc_monitor.Properties.Resources.login_bg2;
+            this.button1.BackgroundImage = global::Pc_monitor.Properties.Resources.button_bb;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button1.Font = new System.Drawing.Font("宋体", 20F);
             this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button1.Location = new System.Drawing.Point(330, 608);
@@ -104,7 +105,8 @@
             // 
             // button2
             // 
-            this.button2.BackgroundImage = global::Pc_monitor.Properties.Resources.login_bg2;
+            this.button2.BackgroundImage = global::Pc_monitor.Properties.Resources.button_bb;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button2.Font = new System.Drawing.Font("宋体", 20F);
             this.button2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button2.Location = new System.Drawing.Point(3, 0);
@@ -128,7 +130,8 @@
             // 
             // button3
             // 
-            this.button3.BackgroundImage = global::Pc_monitor.Properties.Resources.login_bg2;
+            this.button3.BackgroundImage = global::Pc_monitor.Properties.Resources.button_bb;
+            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button3.Font = new System.Drawing.Font("宋体", 20F);
             this.button3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button3.Location = new System.Drawing.Point(1255, 0);
@@ -143,7 +146,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Pc_monitor.Properties.Resources.login_bg2;
+            this.BackgroundImage = global::Pc_monitor.Properties.Resources._480p;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1344, 730);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label4);
@@ -153,6 +157,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
