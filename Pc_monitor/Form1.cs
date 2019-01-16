@@ -340,23 +340,34 @@ namespace Pc_monitor
         private void button3_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
+            string header_url = Properties.Settings.Default.header_url;
             try
             {
                 DataTable recorDataTable = GetTempRecord("Police");
 
-                //提交字符串url
+                //提交字符串url   警员
                 for (int i = 0; i < recorDataTable.Rows.Count; i++)
                 {
-                    string get_url = "http://120.236.239.118:7030/Interface/Synchronize/PCCommonSynchronize.ashx?pcId=" + recorDataTable.Rows[i][2] + "&cafeteriId=" + recorDataTable.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable.Rows[i][4];
+                    string get_url = "http://" + header_url + "/Interface/Synchronize/PCCommonSynchronize.ashx?pcId=" + recorDataTable.Rows[i][2] + "&cafeteriId=" + recorDataTable.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable.Rows[i][4];
                     GetFunction(get_url);
                 }
                 DataTable recorDataTable2 = GetTempRecord("Worker");
-                //提交字符串url
+                //提交字符串url   职工
                 for (int i = 0; i < recorDataTable2.Rows.Count; i++)
                 {
-                    string get_url = "http://120.236.239.118:7030/Interface/Synchronize/WorkerCommonSynchronize.ashx?workerId=" + recorDataTable2.Rows[i][2] + "&cafeteriId=" + recorDataTable2.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable2.Rows[i][4];
+                    string get_url = "http://" + header_url + "/Interface/Synchronize/WorkerCommonSynchronize.ashx?workerId=" + recorDataTable2.Rows[i][2] + "&cafeteriId=" + recorDataTable2.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable2.Rows[i][4];
                     GetFunction(get_url);
                 }
+
+                DataTable recorDataTable3 = GetTempRecord("Family");
+                //提交字符串url   家属
+                for (int i = 0; i < recorDataTable3.Rows.Count; i++)
+                {
+                    string get_url = "http://" + header_url + "/Interface/Synchronize/FamilyCommonSynchronize.ashx?familyId=" + recorDataTable3.Rows[i][2] + "&cafeteriId=" + recorDataTable3.Rows[i][3] + "&cookbookSetInDateId=" + recorDataTable3.Rows[i][4];
+                    GetFunction(get_url);
+                }
+
+
                 this.Enabled = true;
                 MessageBox.Show("同步完成！");
                 ChangeUpdateTable();
@@ -380,11 +391,11 @@ namespace Pc_monitor
         }
 
         //获取record表
-        private DataTable GetTempRecord(string Pc_Worker)
+        private DataTable GetTempRecord(string Pc_Worker_Family)
         {
             SqlConnection conn = new SqlConnection(Properties.Settings.Default.localsqlConn);
             conn.Open();
-            SqlCommand sqlCommand = new SqlCommand("select * from dbo.TempRecord where staffEnum='" + Pc_Worker + "' and upDateBool='0'", conn);
+            SqlCommand sqlCommand = new SqlCommand("select * from dbo.TempRecord where staffEnum='" + Pc_Worker_Family + "' and upDateBool='0'", conn);
             SqlDataAdapter sqlDataAdapter=new SqlDataAdapter(sqlCommand);
             DataTable tempDatetable=new DataTable();
             sqlDataAdapter.Fill(tempDatetable);
@@ -396,10 +407,11 @@ namespace Pc_monitor
         //get方法
         private string GetFunction(string url)
         {
-           
             System.Net.HttpWebRequest request;
             // 创建一个HTTP请求  
             request = (System.Net.HttpWebRequest)WebRequest.Create(url);
+            //设置超时5s
+            request.Timeout = 5000;
             //request.Method="get";  
             System.Net.HttpWebResponse response;
             response = (System.Net.HttpWebResponse)request.GetResponse();

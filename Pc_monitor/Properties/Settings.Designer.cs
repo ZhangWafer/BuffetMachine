@@ -118,5 +118,17 @@ namespace Pc_monitor.Properties {
                 this["localsqlConn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120.236.239.118:7030")]
+        public string header_url {
+            get {
+                return ((string)(this["header_url"]));
+            }
+            set {
+                this["header_url"] = value;
+            }
+        }
     }
 }
