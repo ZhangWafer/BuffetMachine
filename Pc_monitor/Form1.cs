@@ -14,6 +14,8 @@ using System.Xml;
 using Newtonsoft.Json;
 using System.Speech.Synthesis;
 using Microsoft.SqlServer.Types;
+using XinYu.Framework.Library.Implement;
+using XinYu.Framework.Library.Implement.Security;
 
 
 namespace Pc_monitor
@@ -36,6 +38,7 @@ namespace Pc_monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
@@ -124,8 +127,12 @@ namespace Pc_monitor
             {
                 try
                 {
+                  
                     //解析扫码数据，拿取关键信息
                     string jsonText = richTextBox1.Text;
+                    //二维码解密
+                    jsonText=Encrypt.Decode(jsonText);
+                    //json格式化
                     JavaScriptObject jsonObj = JavaScriptConvert.DeserializeObject<JavaScriptObject>(jsonText);
                     personId = jsonObj["Id"].ToString();
                     staffEnum = jsonObj["staffEnum"].ToString();
@@ -420,6 +427,20 @@ namespace Pc_monitor
             myreader.Close();
             return responseText;
         }
+
+        private void panel1_DoubleClick(object sender, EventArgs e)
+        {
+            if( MessageBox.Show( "确定关机吗？", "提示", MessageBoxButtons.YesNo ) == DialogResult.Yes )
+            {
+                //关机代码
+                System.Diagnostics.Process bootProcess = new System.Diagnostics.Process();
+                bootProcess.StartInfo.FileName = "shutdown";
+                bootProcess.StartInfo.Arguments = "/s";
+                bootProcess.Start();
+            }
+        }
+
+
 
     }
 }
