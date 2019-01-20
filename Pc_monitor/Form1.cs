@@ -26,8 +26,8 @@ namespace Pc_monitor
         {
             InitializeComponent();
             //设置全屏
-            //  this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            //this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+              this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
 
