@@ -26,8 +26,8 @@ namespace Pc_monitor
         {
             InitializeComponent();
             //设置全屏
-          //    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-         //   this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            //    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            //   this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
 
@@ -38,7 +38,6 @@ namespace Pc_monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
@@ -79,7 +78,8 @@ namespace Pc_monitor
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText =
                 "INSERT INTO [dbo].[TempRecord]([staffEnum],[staffId],[staffCanteen],[OrderId],[time],[upDateBool])VALUES('" +
-                personEnum + "','" + personId + "','" + staffCanteen + "','" + OrderId + "','" + recordTime + "','false')";
+                personEnum + "','" + personId + "','" + staffCanteen + "','" + OrderId + "','" + recordTime +
+                "','false')";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -127,11 +127,11 @@ namespace Pc_monitor
             {
                 try
                 {
-                  
+
                     //解析扫码数据，拿取关键信息
                     string jsonText = richTextBox1.Text;
                     //二维码解密
-                    jsonText=Encrypt.Decode(jsonText);
+                    jsonText = Encrypt.Decode(jsonText);
                     //json格式化
                     JavaScriptObject jsonObj = JavaScriptConvert.DeserializeObject<JavaScriptObject>(jsonText);
                     personId = jsonObj["Id"].ToString();
@@ -155,6 +155,28 @@ namespace Pc_monitor
                         SpeechVideo_Read(0, 100, "重复扫码！");
                         return;
                     }
+                    //警员接口拿照片
+
+                    string picUrl = "http://" + Properties.Settings.Default.header_url +
+                                    "/Interface/Icon/GetStaffIcon.ashx?id=" + personId + "&staffType=" +
+                                    staffEnum.ToLower();
+                    try
+                    {
+                        string picResponse = GetFunction(picUrl);//照片url回复
+                        //json格式化
+                        JavaScriptObject jsonResponse = JavaScriptConvert.DeserializeObject<JavaScriptObject>(picResponse);
+                        string responPicUrl = jsonResponse["icon"].ToString();
+                        pictureBox1.Image = new Bitmap(new WebClient().OpenRead(responPicUrl));
+                    }
+                    catch (Exception)
+                    {
+                        label2.Text = "拿取照片错误！";
+                        pictureBox1.Image = null;
+                    }
+                   
+
+
+
 
                     //显示扫码成功！大字体
                     richTextBox1.Text = "";
@@ -314,7 +336,7 @@ namespace Pc_monitor
                 MessageBox.Show("查无排餐");
                 return;
             }
-            label4.Text = showString + "-" + dt2.Rows[0][7] + "元";
+            label4.Text = showString ;
             Record_RecentOrder = label4.Text;
             button1.Enabled = true;
         }
