@@ -158,24 +158,22 @@ namespace Pc_monitor
                     //警员接口拿照片
 
                     string picUrl = "http://" + Properties.Settings.Default.header_url +
-                                    "/Interface/Icon/GetStaffIcon.ashx?id=" + personId + "&staffType=" +
-                                    staffEnum.ToLower();
+                                    "/Interface/Icon/GetStaffIconByIpAddr.ashx?id=" + personId + "&staffType=" +
+                                    staffEnum.ToLower()+"&addr="+Properties.Settings.Default.header_url;
                     try
                     {
                         string picResponse = GetFunction(picUrl);//照片url回复
                         //json格式化
                         JavaScriptObject jsonResponse = JavaScriptConvert.DeserializeObject<JavaScriptObject>(picResponse);
                         string responPicUrl = jsonResponse["icon"].ToString();
+
                         pictureBox1.Image = new Bitmap(new WebClient().OpenRead(responPicUrl));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        MessageBox.Show(ex.Message);
                         label2.Text = "拿取照片错误！";
-                        pictureBox1.Image = null;
                     }
-                   
-
-
 
 
                     //显示扫码成功！大字体
@@ -284,10 +282,16 @@ namespace Pc_monitor
 
             string st4 = Properties.Settings.Default.l2; //午餐后
 
+            string st5 = Properties.Settings.Default.d1; //午餐后
+
+            string st6 = Properties.Settings.Default.d2; //午餐后
+
             DateTime b1DateTime = Convert.ToDateTime(st1);
             DateTime b2DateTime = Convert.ToDateTime(st2);
             DateTime l1DateTime = Convert.ToDateTime(st3);
             DateTime l2DateTime = Convert.ToDateTime(st4);
+            DateTime d1DateTime = Convert.ToDateTime(st5);
+            DateTime d2DateTime = Convert.ToDateTime(st6);
 
 
             string currentCat = "";
@@ -302,11 +306,18 @@ namespace Pc_monitor
                 currentCat = "Lunch";
                 showString = "午餐";
             }
-            else
+            else if (DateTime.Compare(currentTime, d1DateTime) > 0 && DateTime.Compare(currentTime, d2DateTime) < 0)
             {
                 currentCat = "Supper";
                 showString = "晚餐";
             }
+            else
+            {
+                MessageBox.Show("当前不在用餐时段");
+                return;
+            }
+
+
             if (dt2 != null)
             {
                 dt2.Clear();
