@@ -93,9 +93,39 @@ namespace Pc_monitor.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap backgroundBLUE {
+            get {
+                object obj = ResourceManager.GetObject("backgroundBLUE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap button_bb {
             get {
                 object obj = ResourceManager.GetObject("button_bb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap EMyty {
+            get {
+                object obj = ResourceManager.GetObject("EMyty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap fantang {
+            get {
+                object obj = ResourceManager.GetObject("fantang", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

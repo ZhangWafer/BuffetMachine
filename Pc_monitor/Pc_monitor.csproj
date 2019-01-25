@@ -160,6 +160,9 @@
     <None Include="Resources\button_bb.png" />
     <None Include="Resources\background.jpg" />
     <None Include="Resources\background1.jpg" />
+    <None Include="Resources\EMyty.jpg" />
+    <None Include="Resources\backgroundBLUE.jpg" />
+    <None Include="Resources\fantang.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

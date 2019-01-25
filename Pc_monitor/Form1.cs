@@ -26,8 +26,8 @@ namespace Pc_monitor
         {
             InitializeComponent();
             //设置全屏
-            //    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            //   this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
 
@@ -171,7 +171,7 @@ namespace Pc_monitor
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        pictureBox1.Image= Properties.Resources.EMyty;
                         label2.Text = "拿取照片错误！";
                     }
 
@@ -210,7 +210,7 @@ namespace Pc_monitor
             {
                 if (label2.Text == "扫码成功！" || label2.Text == "重复扫码！")
                 {
-                    label2.Text = Record_RecentOrder;
+                    label2.Text = "";
                 }
                 timer_count_10s = 0;
             }
