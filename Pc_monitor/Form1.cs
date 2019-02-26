@@ -14,9 +14,10 @@ using System.Xml;
 using Newtonsoft.Json;
 using System.Speech.Synthesis;
 using Microsoft.SqlServer.Types;
+using System.Security.Cryptography.X509Certificates;
 using XinYu.Framework.Library.Implement;
 using XinYu.Framework.Library.Implement.Security;
-
+using System.Net.Security;
 
 namespace Pc_monitor
 {
@@ -27,9 +28,13 @@ namespace Pc_monitor
             InitializeComponent();
             //设置全屏
              this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
+        public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {   // 总是接受  
+            return true;
+        }
 
         private DataTable PcTable;
         private DataTable WorkerTable;
@@ -103,6 +108,7 @@ namespace Pc_monitor
 
         //打菜号暂时变量
         public static int TempOrderId = 0;
+
         public static bool TakeOrderBool = true;
         public static bool AllowTakeOrderBool = true;
         int whole_catlocation = Properties.Settings.Default.catlocation;
@@ -135,6 +141,7 @@ namespace Pc_monitor
                     //json格式化
                     JavaScriptObject jsonObj = JavaScriptConvert.DeserializeObject<JavaScriptObject>(jsonText);
                     personId = jsonObj["Id"].ToString();
+                    var personCardId = jsonObj["Num"].ToString();//身份证号码
                     staffEnum = jsonObj["staffEnum"].ToString();
                     //检查是否存在这个人
                     DataRow[] selectedResult = PcTable.Select("Id=" + personId);
@@ -155,8 +162,60 @@ namespace Pc_monitor
                         SpeechVideo_Read(0, 100, "重复扫码！");
                         return;
                     }
+                    //查看是否过期以及余额是否足够
+                    string imforUrl=null;
+                    if (staffEnum == "Police")
+                    {
+                        imforUrl = "http://" + Properties.Settings.Default.header_url + @"/Interface/PC/GetPcStaff.ashx?InformationNum=" + personCardId; 
+                    }
+                    else
+                    {
+                        imforUrl = "http://" + Properties.Settings.Default.header_url + "/Interface/Worker/GetWorkerStaff.ashx?informationNum=" + personCardId;
+                    }
+                  
+                    string dateResponse = "";
+                    try
+                    {
+                        dateResponse = GetFunction(imforUrl);//照片url回复
+                    }
+                    catch (Exception ex)
+                    {
+                        richTextBox1.Text = "";
+                        label2.Text = "网络错误";
+                        return;
+                    }
+                    JavaScriptObject jsonResponse2 = JavaScriptConvert.DeserializeObject<JavaScriptObject>(dateResponse);
+                    JavaScriptObject json;
+                    if (staffEnum == "Police")
+                    {
+                         json = (JavaScriptObject)jsonResponse2["pcInfo"];
+                    }
+                    else
+                    {
+                         json = (JavaScriptObject)jsonResponse2["workerInfo"];
+                    }
+                      
+                    var effectDate = json["ValidityDate"];
+                    if (effectDate != null)
+                    {
+                        TimeSpan ts = Convert.ToDateTime(effectDate.ToString().Split('T')[0]) - DateTime.Now;
+                        if (ts.Hours < 0)
+                        {
+                            label2.Text = "用户已过期！";
+                            richTextBox1.Text = "";
+                            SpeechVideo_Read(0, 100, "用户已过期！");
+                            return;
+                        }
+                    }
+                    string money = json["Amount"].ToString();
+                    if ((Convert.ToInt32(money) - Recent_Price) < 0)
+                    {
+                        label2.Text = "余额不足！";
+                        richTextBox1.Text = "";
+                        SpeechVideo_Read(0, 100, "余额不足！");
+                        return;
+                    }
                     //警员接口拿照片
-
                     string picUrl = "http://" + Properties.Settings.Default.header_url +
                                     "/Interface/Icon/GetStaffIconByIpAddr.ashx?id=" + personId + "&staffType=" +
                                     staffEnum.ToLower()+"&addr="+Properties.Settings.Default.header_url;
@@ -182,6 +241,7 @@ namespace Pc_monitor
                     label2.ForeColor = Color.GreenYellow;
                     label2.Text = "扫码成功！";
                     SpeechVideo_Read(0, 100, "扫码成功！");
+                    label2.Text = "余额：" + money.ToString() + "元";
 
                     //扫码成功写入xml文件
                     //AppendXml(staffEnum, personId, whole_catlocation.ToString(), TempOrderId.ToString(),
@@ -262,7 +322,7 @@ namespace Pc_monitor
         }
 
         private string Record_RecentOrder = "";
-
+        private double Recent_Price = 0;
         private void button2_Click(object sender, EventArgs e)
         {
             //更新数据表
@@ -340,8 +400,9 @@ namespace Pc_monitor
             try
             {
                 TempOrderId = Int32.Parse(dt2.Rows[0][0].ToString());
+                Recent_Price=Convert.ToDouble(dt2.Rows[0][7].ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 MessageBox.Show("查无排餐");
@@ -448,12 +509,14 @@ namespace Pc_monitor
         private string GetFunction(string url)
         {
             System.Net.HttpWebRequest request;
+            
             // 创建一个HTTP请求  
             request = (System.Net.HttpWebRequest)WebRequest.Create(url);
             //设置超时5s
             request.Timeout = 5000;
             //request.Method="get";  
             System.Net.HttpWebResponse response;
+            request.ContentType = "application/x-www-form-urlencoded";//新增
             response = (System.Net.HttpWebResponse)request.GetResponse();
             System.IO.StreamReader myreader = new System.IO.StreamReader(response.GetResponseStream(), Encoding.UTF8);
             string responseText = myreader.ReadToEnd();
@@ -473,9 +536,13 @@ namespace Pc_monitor
             }
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
 
+            }
 
+        }
     }
-}
+
 
 

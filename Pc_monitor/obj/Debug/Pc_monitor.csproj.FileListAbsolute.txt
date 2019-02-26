@@ -87,7 +87,6 @@ D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\SqlServerTypes\x86\SqlServerSpatial
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.exe
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.pdb
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Microsoft.SqlServer.Types.dll
-D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojResolveAssemblyReference.cache
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.backForm.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form1.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form5.resources
@@ -95,3 +94,5 @@ D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.login.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Properties.Resources.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.GenerateResource.Cache
 E:\GitHub\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojResolveAssemblyReference.cache
+D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.CoreCompileInputs.cache
+D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.CopyComplete
