@@ -27,8 +27,8 @@ namespace Pc_monitor
         {
             InitializeComponent();
             //设置全屏
-             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+           // this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+          //  this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
         public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -43,7 +43,7 @@ namespace Pc_monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            button1.Enabled = false;
+             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
             timer1.Start();
@@ -51,6 +51,8 @@ namespace Pc_monitor
             //  backForm bkForm = new backForm();
             // bkForm.Show();
             //读取用户表格---只在开机读取一次
+            //消费人数统计
+            label1.Text = "0";
             try
             {
                 PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
@@ -133,9 +135,9 @@ namespace Pc_monitor
             {
                 try
                 {
-
+                   var richText= richTextBox1.Text.Split('\n');
                     //解析扫码数据，拿取关键信息
-                    string jsonText = richTextBox1.Text;
+                    string jsonText = richText[0];
                     //二维码解密
                     jsonText = Encrypt.Decode(jsonText);
                     //json格式化
@@ -152,6 +154,7 @@ namespace Pc_monitor
                         label2.Font = new Font("宋体粗体", 50);
                         label2.ForeColor = Color.Red;
                         label2.Text = "查无此人";
+                     
                         return;
                     }
                     //检查是否重复刷卡
@@ -160,6 +163,7 @@ namespace Pc_monitor
                         richTextBox1.Text = "";
                         label2.Text = "重复扫码！";
                         SpeechVideo_Read(0, 100, "重复扫码！");
+                      
                         return;
                     }
                     //查看是否过期以及余额是否足够
@@ -178,10 +182,11 @@ namespace Pc_monitor
                     {
                         dateResponse = GetFunction(imforUrl);//照片url回复
                     }
-                    catch (Exception ex)
+                    catch (Exception )
                     {
                         richTextBox1.Text = "";
                         label2.Text = "网络错误";
+                      
                         return;
                     }
                     JavaScriptObject jsonResponse2 = JavaScriptConvert.DeserializeObject<JavaScriptObject>(dateResponse);
@@ -204,15 +209,17 @@ namespace Pc_monitor
                             label2.Text = "用户已过期！";
                             richTextBox1.Text = "";
                             SpeechVideo_Read(0, 100, "用户已过期！");
+                          
                             return;
                         }
                     }
                     string money = json["Amount"].ToString();
-                    if ((Convert.ToInt32(money) - Recent_Price) < 0)
+                    if ((Convert.ToDouble(money) - Recent_Price) < 0)
                     {
                         label2.Text = "余额不足！";
                         richTextBox1.Text = "";
                         SpeechVideo_Read(0, 100, "余额不足！");
+                  
                         return;
                     }
                     //警员接口拿照片
@@ -228,7 +235,7 @@ namespace Pc_monitor
 
                         pictureBox1.Image = new Bitmap(new WebClient().OpenRead(responPicUrl));
                     }
-                    catch (Exception ex)
+                    catch (Exception )
                     {
                         pictureBox1.Image= Properties.Resources.EMyty;
                         label2.Text = "拿取照片错误！";
@@ -241,8 +248,8 @@ namespace Pc_monitor
                     label2.ForeColor = Color.GreenYellow;
                     label2.Text = "扫码成功！";
                     SpeechVideo_Read(0, 100, "扫码成功！");
-                    label2.Text = "余额：" + money.ToString() + "元";
-
+                    label2.Text = "消费前余额：" + money.ToString() + "元";
+                    label1.Text =( Convert.ToInt16(label1.Text) + 1).ToString();
                     //扫码成功写入xml文件
                     //AppendXml(staffEnum, personId, whole_catlocation.ToString(), TempOrderId.ToString(),
                     //    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -253,13 +260,14 @@ namespace Pc_monitor
 
                     AllowTakeOrderBool = false;
                     TakeOrderBool = false;
+                 
                 }
-                catch (Exception EX)
+                catch (Exception )
                 {
-
                     richTextBox1.Text = "";
                     label2.Text = "请出示正确的二维码";
                     SpeechVideo_Read(0, 100, "扫码错误！");
+                    
                 }
                 //写入文本，写入记录
 
@@ -401,8 +409,9 @@ namespace Pc_monitor
             {
                 TempOrderId = Int32.Parse(dt2.Rows[0][0].ToString());
                 Recent_Price=Convert.ToDouble(dt2.Rows[0][7].ToString());
+                label1.Text = "0";
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 MessageBox.Show("查无排餐");
@@ -419,6 +428,7 @@ namespace Pc_monitor
         {
             //拿取数据
             Button button = (Button) sender;
+
             var NameArray = button.Name.Split('*');
             //调整label2字体
             label2.Font = new Font("黑体", 22);

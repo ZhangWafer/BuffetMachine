@@ -12,13 +12,13 @@
       <Value Profile="(Default)">07:30</Value>
     </Setting>
     <Setting Name="l1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">11:00</Value>
+      <Value Profile="(Default)">09:00</Value>
     </Setting>
     <Setting Name="l2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">17:00</Value>
+      <Value Profile="(Default)">12:00</Value>
     </Setting>
     <Setting Name="d1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">18:02</Value>
+      <Value Profile="(Default)">12:02</Value>
     </Setting>
     <Setting Name="d2" Type="System.String" Scope="User">
       <Value Profile="(Default)">23:00</Value>
