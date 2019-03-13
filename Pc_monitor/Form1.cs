@@ -63,7 +63,6 @@ namespace Pc_monitor
             }
             catch (Exception exception)
             {
-
                 MessageBox.Show("数据库连接失败!" + exception.Message);
             }
 
@@ -214,7 +213,57 @@ namespace Pc_monitor
                         }
                     }
                     string money = json["Amount"].ToString();
-                    if ((Convert.ToDouble(money) - Recent_Price) < 0)
+                    double tempChangePrice = 0;
+                    switch (staffEnum)
+                    {
+                        case "Police":
+                            tempChangePrice = Recent_Price;
+                            break;
+                        case "Worker":
+                            switch (currentCat)
+                            {
+                                case "Breakfast":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Worker_Breakfast"]);
+                                    break;
+                                case "Lunch":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Worker_Lunch"]);
+                                    break;
+                                case "Supper":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Worker_Supper"]);
+                                    break;
+                            }
+                            break;
+                        case "Stationed":
+                            switch (currentCat)
+                            {
+                                case "Breakfast":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Stationed_Breakfast"]);
+                                    break;
+                                case "Lunch":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Stationed_Lunch"]);
+                                    break;
+                                case "Supper":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Stationed_Supper"]);
+                                    break;
+                            }
+                            break;
+                        case "Emploee":
+                            switch (currentCat)
+                            {
+                                case "Breakfast":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Emploee_Breakfast"]);
+                                    break;
+                                case "Lunch":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Emploee_Lunch"]);
+                                    break;
+                                case "Supper":
+                                    tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Emploee_Supper"]);
+                                    break;
+                            }
+                            break;
+                    }
+                    
+                    if ((Convert.ToDouble(money) - tempChangePrice) < 0)
                     {
                         label2.Text = "余额不足！";
                         richTextBox1.Text = "";
@@ -330,9 +379,15 @@ namespace Pc_monitor
         }
 
         private string Record_RecentOrder = "";
-        private double Recent_Price = 0;
+        private double Recent_Price = 0;//保存警察的用餐价格
+        string currentCat = "";//当前餐次
+        JavaScriptObject allPriceJsonObj;
         private void button2_Click(object sender, EventArgs e)
         {
+            //更新135餐价格
+            var urlHeader = "http://"+Properties.Settings.Default.header_url;
+            var returnPrice = GetFunction(urlHeader +"/Interface/Common/GetPrices.ashx");
+            allPriceJsonObj = JavaScriptConvert.DeserializeObject<JavaScriptObject>(returnPrice);
             //更新数据表
             PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
             WorkerTable = SqlHelper.ExecuteDataTable("select * from Cater.WorkerStaff");
@@ -362,7 +417,7 @@ namespace Pc_monitor
             DateTime d2DateTime = Convert.ToDateTime(st6);
 
 
-            string currentCat = "";
+           
             string showString = "";
             if (DateTime.Compare(currentTime, b1DateTime) > 0 && DateTime.Compare(currentTime, b2DateTime) < 0)
             {
