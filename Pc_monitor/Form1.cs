@@ -144,6 +144,15 @@ namespace Pc_monitor
                     personId = jsonObj["Id"].ToString();
                     var personCardId = jsonObj["Num"].ToString();//身份证号码
                     staffEnum = jsonObj["staffEnum"].ToString();
+                    var WorkerStaffEnum ="";
+                    try
+                    {
+                         WorkerStaffEnum = jsonObj["WorkerStaffEnum"].ToString();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     //检查是否存在这个人
                     DataRow[] selectedResult = PcTable.Select("Id=" + personId);
                     DataRow[] selectedResult_worker = WorkerTable.Select("Id=" + personId);
@@ -214,11 +223,13 @@ namespace Pc_monitor
                     }
                     string money = json["Amount"].ToString();
                     double tempChangePrice = 0;
-                    switch (staffEnum)
+
+                    if (staffEnum == "Police")
                     {
-                        case "Police":
-                            tempChangePrice = Recent_Price;
-                            break;
+                        tempChangePrice = Recent_Price;
+                    }
+                    switch (WorkerStaffEnum)
+                    {
                         case "Worker":
                             switch (currentCat)
                             {
@@ -260,6 +271,8 @@ namespace Pc_monitor
                                     tempChangePrice = Convert.ToDouble(allPriceJsonObj["Common_WorkerStaff_Emploee_Supper"]);
                                     break;
                             }
+                            break;
+                        default:
                             break;
                     }
                     
