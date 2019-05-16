@@ -44,7 +44,8 @@ namespace Pc_monitor
         private void Form1_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.Manual; //窗体的位置由Location属性决定
-            this.Location = (Point)new Size(1800, 200);
+            //this.Location = (Point)new Size(1800, 200);
+            this.Location = (Point)new Size(0, 200);
             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
@@ -55,6 +56,9 @@ namespace Pc_monitor
             //读取用户表格---只在开机读取一次
             //消费人数统计
             label1.Text = "0";
+
+            //开机自动同步
+            button2_Click(null, null);
         }
 
 
@@ -604,6 +608,7 @@ namespace Pc_monitor
         {
             if( MessageBox.Show( "确定关机吗？", "提示", MessageBoxButtons.YesNo ) == DialogResult.Yes )
             {
+                button3_Click(null, null);
                 //关机代码
                 System.Diagnostics.Process bootProcess = new System.Diagnostics.Process();
                 bootProcess.StartInfo.FileName = "shutdown";
