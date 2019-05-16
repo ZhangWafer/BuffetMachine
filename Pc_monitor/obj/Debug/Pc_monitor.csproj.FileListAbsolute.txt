@@ -86,7 +86,6 @@ D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.exe.config
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.exe
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Pc_monitor.pdb
 D:\GITHUB\BuffetMachine\Pc_monitor\bin\Debug\Microsoft.SqlServer.Types.dll
-D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojAssemblyReference.cache
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.backForm.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form1.resources
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.Form5.resources

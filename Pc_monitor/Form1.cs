@@ -44,8 +44,8 @@ namespace Pc_monitor
         private void Form1_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.Manual; //窗体的位置由Location属性决定
-            //this.Location = (Point)new Size(1800, 200);
-            this.Location = (Point)new Size(0, 200);
+            this.Location = (Point)new Size(1800, 200);
+            //this.Location = (Point)new Size(0, 200);
             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
