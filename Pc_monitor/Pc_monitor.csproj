@@ -163,6 +163,18 @@
     <None Include="Resources\EMyty.jpg" />
     <None Include="Resources\backgroundBLUE.jpg" />
     <None Include="Resources\fantang.jpg" />
+    <None Include="Resources\更新按钮.png" />
+    <None Include="Resources\同步按钮.png" />
+    <None Include="Resources\固定餐桌面.jpg" />
+    <None Include="Resources\提交按钮.png" />
+    <None Include="Resources\固定餐桌面1.jpg" />
+    <None Include="Resources\更新按钮.jpg" />
+    <None Include="Resources\同步按钮.jpg" />
+    <None Include="Resources\红色按钮.jpg" />
+    <None Include="Resources\红色按钮1.jpg" />
+    <None Include="Resources\固定餐桌面2.jpg" />
+    <None Include="Resources\固定餐桌面3.jpg" />
+    <None Include="Resources\提交按钮1.png" />
     <Content Include="SqlServerTypes\readme.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,10 +15,10 @@
       <Value Profile="(Default)">09:00</Value>
     </Setting>
     <Setting Name="l2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">12:00</Value>
+      <Value Profile="(Default)">13:00</Value>
     </Setting>
     <Setting Name="d1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">12:02</Value>
+      <Value Profile="(Default)">13:00</Value>
     </Setting>
     <Setting Name="d2" Type="System.String" Scope="User">
       <Value Profile="(Default)">23:00</Value>
@@ -28,6 +28,9 @@
     </Setting>
     <Setting Name="localsqlConn" Type="System.String" Scope="User">
       <Value Profile="(Default)">server=MAT-PC0045\WAFER;database=LocalRecord;uid=sa;pwd=Zyfzyf123;</Value>
+    </Setting>
+    <Setting Name="fullscreen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

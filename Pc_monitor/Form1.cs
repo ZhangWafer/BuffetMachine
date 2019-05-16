@@ -27,8 +27,13 @@ namespace Pc_monitor
         {
             InitializeComponent();
             //设置全屏
-           // this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-          //  this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            if (Properties.Settings.Default.fullscreen)
+            {
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            }
+
+             //    button1.Location = new Point (Properties.Settings.Default.X值, Properties.Settings.Default.y值);
         }
 
         public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -36,14 +41,11 @@ namespace Pc_monitor
             return true;
         }
 
-        private DataTable PcTable;
-        private DataTable WorkerTable;
-        private DataTable All_OrderDetail;
-        private DataTable All_OrderTable;
-
         private void Form1_Load(object sender, EventArgs e)
         {
-             button1.Enabled = false;
+            this.StartPosition = FormStartPosition.Manual; //窗体的位置由Location属性决定
+            this.Location = (Point)new Size(1800, 200);
+            button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
             timer1.Start();
@@ -53,19 +55,6 @@ namespace Pc_monitor
             //读取用户表格---只在开机读取一次
             //消费人数统计
             label1.Text = "0";
-            try
-            {
-                PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
-                WorkerTable = SqlHelper.ExecuteDataTable("select * from Cater.WorkerStaff");
-
-                All_OrderDetail = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDateDetail");
-                All_OrderTable = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDate");
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("数据库连接失败!" + exception.Message);
-            }
-
         }
 
 
@@ -134,7 +123,10 @@ namespace Pc_monitor
             {
                 try
                 {
-                   var richText= richTextBox1.Text.Split('\n');
+                    System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                    watch.Start();//开始计时
+
+                    var richText= richTextBox1.Text.Split('\n');
                     //解析扫码数据，拿取关键信息
                     string jsonText = richText[0];
                     //二维码解密
@@ -153,10 +145,22 @@ namespace Pc_monitor
                     {
 
                     }
+                    Object o_result = null;
                     //检查是否存在这个人
-                    DataRow[] selectedResult = PcTable.Select("Id=" + personId);
-                    DataRow[] selectedResult_worker = WorkerTable.Select("Id=" + personId);
-                    if (selectedResult.Length == 0 && selectedResult_worker.Length == 0)
+                    //DataRow[] selectedResult = PcTable.Select("Id=" + personId);
+                    if (staffEnum == "Police")
+                    {
+                        string select_Exist_pc = "select * from Cater.PCStaff where [Id]='" + personId + "'";
+                         o_result = SqlHelper.ExecuteScalar(select_Exist_pc);
+                    }
+                    else
+                    {
+                        string select_Exist_worker = "select * from Cater.WorkerStaff where [Id]='" + personId + "'";
+                         o_result = SqlHelper.ExecuteScalar(select_Exist_worker);
+                    }
+                    
+                //    DataRow[] selectedResult_worker = WorkerTable.Select("Id=" + personId);
+                    if (o_result == null)
                     {
                         richTextBox1.Text = "";
                         label2.Font = new Font("宋体粗体", 50);
@@ -188,13 +192,12 @@ namespace Pc_monitor
                     string dateResponse = "";
                     try
                     {
-                        dateResponse = GetFunction(imforUrl);//照片url回复
+                        dateResponse = GetFunction(imforUrl);//拿取余额以及有效期
                     }
                     catch (Exception )
                     {
                         richTextBox1.Text = "";
                         label2.Text = "网络错误";
-                      
                         return;
                     }
                     JavaScriptObject jsonResponse2 = JavaScriptConvert.DeserializeObject<JavaScriptObject>(dateResponse);
@@ -284,17 +287,17 @@ namespace Pc_monitor
                   
                         return;
                     }
-                    //警员接口拿照片
+                    //接口拿照片
                     string picUrl = "http://" + Properties.Settings.Default.header_url +
                                     "/Interface/Icon/GetStaffIconByIpAddr.ashx?id=" + personId + "&staffType=" +
-                                    staffEnum.ToLower()+"&addr="+Properties.Settings.Default.header_url;
+                                    staffEnum.ToLower() + "&addr=" + Properties.Settings.Default.header_url;
                     try
                     {
                         string picResponse = GetFunction(picUrl);//照片url回复
-                        //json格式化
+                      //  json格式化
                         JavaScriptObject jsonResponse = JavaScriptConvert.DeserializeObject<JavaScriptObject>(picResponse);
                         string responPicUrl = jsonResponse["icon"].ToString();
-
+                        //var ddd = json["Icon"].ToString();
                         pictureBox1.Image = new Bitmap(new WebClient().OpenRead(responPicUrl));
                     }
                     catch (Exception )
@@ -302,7 +305,6 @@ namespace Pc_monitor
                         pictureBox1.Image= Properties.Resources.EMyty;
                         label2.Text = "拿取照片错误！";
                     }
-
 
                     //显示扫码成功！大字体
                     richTextBox1.Text = "";
@@ -319,10 +321,12 @@ namespace Pc_monitor
                     InsertRecoed(staffEnum, personId, whole_catlocation.ToString(), TempOrderId.ToString(),
                         DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-
                     AllowTakeOrderBool = false;
                     TakeOrderBool = false;
-                 
+
+                    watch.Stop();//停止计时
+
+                    Console.WriteLine("耗时:" + (watch.ElapsedMilliseconds));//输出时间 毫秒
                 }
                 catch (Exception )
                 {
@@ -352,7 +356,7 @@ namespace Pc_monitor
 
 
 
-        private int selectedNum = 0;
+        private int tselectedNum = 0;
 
 
 
@@ -402,10 +406,7 @@ namespace Pc_monitor
             var returnPrice = GetFunction(urlHeader +"/Interface/Common/GetPrices.ashx");
             allPriceJsonObj = JavaScriptConvert.DeserializeObject<JavaScriptObject>(returnPrice);
             //更新数据表
-            PcTable = SqlHelper.ExecuteDataTable("select * from Cater.PCStaff");
-            WorkerTable = SqlHelper.ExecuteDataTable("select * from Cater.WorkerStaff");
-            All_OrderDetail = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDateDetail");
-            All_OrderTable = SqlHelper.ExecuteDataTable("select * from Cater.CookbookSetInDate");
+
             //分割线·············分割线//
             int catlocation = Properties.Settings.Default.catlocation;
             DateTime currentTime = new DateTime();
@@ -429,8 +430,6 @@ namespace Pc_monitor
             DateTime d1DateTime = Convert.ToDateTime(st5);
             DateTime d2DateTime = Convert.ToDateTime(st6);
 
-
-           
             string showString = "";
             if (DateTime.Compare(currentTime, b1DateTime) > 0 && DateTime.Compare(currentTime, b2DateTime) < 0)
             {
@@ -587,7 +586,6 @@ namespace Pc_monitor
         private string GetFunction(string url)
         {
             System.Net.HttpWebRequest request;
-            
             // 创建一个HTTP请求  
             request = (System.Net.HttpWebRequest)WebRequest.Create(url);
             //设置超时5s

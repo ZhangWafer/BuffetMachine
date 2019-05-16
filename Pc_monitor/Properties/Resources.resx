@@ -118,28 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="login-bg2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\login-bg2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="EMyty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EMyty.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_bb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_bb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="固定餐桌面" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\固定餐桌面.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="backgroundBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\backgroundBLUE.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="固定餐桌面3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\固定餐桌面3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="同步按钮" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\同步按钮.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fantang" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fantang.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EMyty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EMyty.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="480p" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\480p.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="更新按钮" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\更新按钮.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="background1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fantang" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fantang.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="红色按钮1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\红色按钮1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_bb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_bb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="固定餐桌面1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\固定餐桌面1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="更新按钮1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\更新按钮.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login-bg2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login-bg2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="红色按钮" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\红色按钮.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="480p" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\480p.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backgroundBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backgroundBLUE.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="同步按钮1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\同步按钮.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="固定餐桌面2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\固定餐桌面2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="提交按钮" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\提交按钮.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="提交按钮1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\提交按钮1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
