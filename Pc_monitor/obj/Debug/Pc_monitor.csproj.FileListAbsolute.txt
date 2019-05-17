@@ -96,3 +96,4 @@ D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.CoreCompileInputs
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csproj.CopyComplete
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.exe
 D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.pdb
+D:\GITHUB\BuffetMachine\Pc_monitor\obj\Debug\Pc_monitor.csprojAssemblyReference.cache

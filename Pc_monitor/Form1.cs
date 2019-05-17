@@ -26,6 +26,8 @@ namespace Pc_monitor
         public Form1()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.Manual; //窗体的位置由Location属性决定
+            this.Location = (Point)new Size(1800, 200);
             //设置全屏
             if (Properties.Settings.Default.fullscreen)
             {
@@ -43,13 +45,14 @@ namespace Pc_monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.StartPosition = FormStartPosition.Manual; //窗体的位置由Location属性决定
-            this.Location = (Point)new Size(1800, 200);
+
             //this.Location = (Point)new Size(0, 200);
             button1.Enabled = false;
             //启动定时器
             timer1.Enabled = true;
             timer1.Start();
+            timer2.Enabled = true;
+            timer2.Start();
             //显示第二显示屏画面
             //  backForm bkForm = new backForm();
             // bkForm.Show();
@@ -620,9 +623,13 @@ namespace Pc_monitor
         private void button4_Click(object sender, EventArgs e)
         {
 
-            }
+         }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
 
         }
+    }
     }
 
 
